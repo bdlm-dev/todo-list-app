@@ -3,9 +3,10 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
 import { Text, View, Button, useColorScheme } from 'react-native';
 
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeScreen, DetailScreen, NavControls } from './components/components.js';
+import { DefaultLightTheme, DefaultDarkTheme } from './components/themes.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +19,7 @@ export default function App() {
   return (
     <>
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'}/>
-      <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <NavigationContainer theme={scheme === 'dark' ? DefaultDarkTheme : DefaultLightTheme}>
         <Stack.Navigator initialRouteName="Home" className="flex-grow">
           
           <Stack.Screen 
@@ -27,9 +28,9 @@ export default function App() {
           options={{ title: 'Home', headerShown: false }}/>
           
           <Stack.Screen 
-          name="Details"
+          name="Settings"
           component={DetailScreen}
-          options={{ title: 'Details' }}/>
+          options={{ title: 'Settings' }}/>
 
         </Stack.Navigator>
         <NavControls />
@@ -42,7 +43,7 @@ export { Stack };
 
 /*
 
-TODO: Make own light/dark themes
+TODO: Make own light/dark themes DONE
 
 
 
