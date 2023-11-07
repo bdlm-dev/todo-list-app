@@ -4,7 +4,7 @@ Simple to-do list mobile application developed using React Native with Tailwind 
 
 The app is built on Expo Go, making it easy to run on both Android and iOS devices.
 
-![Screenshot of Android Device running Todo List App](https://github.com/bdlm-dev/todo-list-app/assets/74147859/0379f396-4f3b-48b6-a0be-26d2711378c1)
+![Screenshot of Android Device running Todo List App](https://github.com/bdlm-dev/todo-list-app/blob/master/assets/app_example.png)
 
 ## Features
 
