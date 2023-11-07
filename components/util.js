@@ -1,7 +1,8 @@
-import { View, Text, Button } from 'react-native';
+import { Text } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-import { styled } from "nativewind";
 
+// Text alternative to be used when against theme background
+// Text colour dependent on theme
 const AppText = ({ children, style}) => {
     const { colors } = useTheme();
     return (

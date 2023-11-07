@@ -5,16 +5,15 @@ import { Text, View, Button, useColorScheme } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { HomeScreen, DetailScreen, NavControls } from './components/components.js';
+import { HomeScreen, DetailScreen, NavControls, NewTaskModal } from './components/components.js';
 import { DefaultLightTheme, DefaultDarkTheme } from './components/themes.js';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
 
+  // "dark" is replaced by useColorScheme() && setting chosen in prod
   const scheme = "dark";
-
-  // Use context to provide props to screens
 
   return (
     <>
@@ -24,13 +23,18 @@ export default function App() {
           
           <Stack.Screen 
           name="Home" 
-          component={HomeScreen} 
+          component={HomeScreen}
           options={{ title: 'Home', headerShown: false }}/>
           
           <Stack.Screen 
           name="Settings"
           component={DetailScreen}
           options={{ title: 'Settings' }}/>
+
+          <Stack.Screen
+          name="New Task"
+          component={NewTaskModal}
+          options={{presentation: "transparentModal", headerShown: false}}/>
 
         </Stack.Navigator>
         <NavControls />
@@ -44,7 +48,9 @@ export { Stack };
 /*
 
 TODO: Make own light/dark themes DONE
-
+TODO: Provide theme, tasks, lists, as context
+TODO: write modal for adding new task
+TODO: figure out task completion, movement between categories
 
 
 

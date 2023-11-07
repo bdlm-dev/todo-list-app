@@ -1,19 +1,16 @@
-import { Text, View, Pressable, Button} from 'react-native';
+import { View, Pressable } from 'react-native';
 import { useTheme, useNavigation, CommonActions } from '@react-navigation/native';
-import { AppText } from './util';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
+import { AppText } from './util';
 
+// Central navigation controls
+// Navigate to: Home, Settings, Create Task Modal
 function NavControls() {
     const { colors } = useTheme();
+    // NavControls are outside of the nav stack
+    // So {navigation} must be accessed via hook
     const navigation = useNavigation();
-
-
-    // Home Nav Reset should only work when not on home page; DONE
-    // Turn into external function to allow use in multiple places
-    // npx expo start (-c)
-    // shift+a to select emulator
-
 
     return (
         <View 
@@ -28,9 +25,9 @@ function NavControls() {
                 icon="home"
                 label="Home"/>
 
-                <CircleButton 
+                <NewTaskButton 
                 onNewTask={() => {
-                    console.log("Handle new task creation (with modal)");
+                    navigation.navigate('New Task')
                 }}/>
 
                 <NavButton 
@@ -45,6 +42,8 @@ function NavControls() {
     )
 }
 
+// Returns button as used in central nav
+// Params: MaterialIcons icon string, button label, onPress func
 const NavButton = ({icon, label, onPress}) => {
     const { colors } = useTheme();
 
@@ -54,7 +53,11 @@ const NavButton = ({icon, label, onPress}) => {
         onPress={onPress}>
             {({ pressed }) => (
                 <>
-                    <MaterialIcons name={icon} size={40} color={colors.text} style={{color: pressed ? colors.background : colors.text}}/>
+                    <MaterialIcons 
+                    name={icon} 
+                    size={40} 
+                    color={colors.text} 
+                    style={{color: pressed ? colors.background : colors.text}}/>
                     <AppText className="text-center text-xs">{label}</AppText>
                  </>
             )}
@@ -62,7 +65,9 @@ const NavButton = ({icon, label, onPress}) => {
     )
 }
 
-const CircleButton = ({onNewTask}) => {
+
+// Button in nav for launching create task modal
+const NewTaskButton = ({onNewTask}) => {
     const { colors } = useTheme();
 
     return(
@@ -81,6 +86,9 @@ const CircleButton = ({onNewTask}) => {
     );
 }
 
+// Could be placed in util.js?
+// Attempts to reset navigation state and revert to home with empty stack
+// Because navigation.popToTop() wasn't working for whatever reason
 const navigateToHome = (navigation) => {
     if (navigation.getState() != undefined) {
         if (navigation.getState().index != 0) {

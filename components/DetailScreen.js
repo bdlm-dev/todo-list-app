@@ -1,14 +1,14 @@
-import { Text, View, Button } from 'react-native';
+import { View } from 'react-native';
+import { AppText } from './util';
 
-
+// Screen to contain settings implementation
 function DetailScreen({ navigation }) {
     return (
       <View className="flex-grow">
-            <Text>Details Screen</Text>
-            <Button
-            title="Go to Details... again"
-            onPress={() => navigation.push('Settings')}
-            />
+            <AppText>Settings Screen :)</AppText>
+            <AppText>select appearance (light/dark)</AppText>
+            <AppText>clear data</AppText>
+            <AppText>export data?</AppText>
       </View>
     );
   }
