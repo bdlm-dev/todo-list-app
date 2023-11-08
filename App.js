@@ -1,7 +1,5 @@
 import { StatusBar } from 'expo-status-bar'; 
 // status bar is the device info at the top, e.g., time, battery, wifi, etc.
-import React, {useState, useEffect} from 'react';
-import { Text, View, Button, useColorScheme } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -47,41 +45,10 @@ export { Stack };
 
 /*
 
-TODO: Make own light/dark themes DONE
-TODO: Provide theme, tasks, lists, as context
-TODO: write modal for adding new task
-TODO: figure out task completion, movement between categories
-
-
-
+TODO: Provide theme, tasks, lists, as context?
+TODO: Implement movement between categories, deletion
 
 */
-
-  /*
-  const theme = useColorScheme();
-
-  const statusBarHeight = Constants.statusBarHeight || 0;
-  const [hidden, setHidden] = useState(false);
-
-  const STYLES = ["light", "dark"];
-
-  const [statusBarStyle, setStatusBarStyle] = useState(STYLES[0]);
-  const [styleIndex, setStyleIndex] = useState(0);
-
-  return (
-    <View className="flex-grow items-center bg-stone-800" style={{paddingTop: statusBarHeight}}>
-      <StatusBar
-      style={statusBarStyle}
-      hidden={hidden} />
-      <Text>Open up App.js to start working on your app!</Text>
-      <Button 
-      onPress={() => {setStyleIndex((styleIndex+1) % STYLES.length); setStatusBarStyle(STYLES[styleIndex]);}}
-      title="Click me"
-      color="#ffff7f"
-      />
-    </View>
-  );
-  */
 
 /*
 Navigation Docs - https://reactnavigation.org/docs/ 
