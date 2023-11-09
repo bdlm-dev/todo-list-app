@@ -46,7 +46,8 @@ export { Stack };
 /*
 
 TODO: Provide theme, tasks, lists, as context?
-TODO: Implement movement between categories, deletion
+TODO: Implement movement between categories
+TODO: Save list & task data locally
 
 */
 

@@ -72,7 +72,7 @@ function HomeScreen({ navigation }) {
             <StatusBarPlaceholder />
             <View className="relative flex-grow items-center" style={{ color: colors.text }}>
                 <ListSelector lists={lists} value={value} setValue={setValue}/>
-                <TaskView tasks={tasks} selected={value} selectedSub={selectedSubList} updateTask={updateTask}/>
+                <TaskView tasks={tasks} setTasks={setTasks} selected={value} selectedSub={selectedSubList} updateTask={updateTask}/>
             </View>
             <SubListNav selectedTab={selectedTab} setSelectedTab={setSelectedTab} lists={lists} selectedList={value}/>
         </>

@@ -1,36 +1,71 @@
 import { useState } from 'react';
-import { View, ScrollView, Pressable } from 'react-native';
+import { View, ScrollView, Pressable, Button } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 import { AppText } from '../util';
+import { removeTask } from '../data/data';
 
 // Display all tasks in scrollable view according to current active list
-export default function TaskView({tasks, selected, selectedSub, updateTask}) {
+export default function TaskView({tasks, setTasks, selected, selectedSub, updateTask}) {
+    const { colors } = useTheme();
+
+    // Modal for deleting tasks
+    // Opened by long-press on tasks
+    const [modalOpen, setModalOpen] = useState(false);
+    const [taskToManage, setTaskToManage] = useState(null);
+    const taskManageModal = 
+    <View className="absolute bottom-0 mb-4 z-[10000]">
+        <Pressable className="bg-stone-800 opacity-50 h-screen w-screen" onPress={() => {
+            setModalOpen(false);
+        }}></Pressable>
+        <View>
+            <Button 
+            color={colors.failure} 
+            onPress={() => {
+                setTasks(removeTask(taskToManage.id));
+                setModalOpen(false);
+            }}
+            title={`DELETE TASK: ${taskToManage === null ? "" : taskToManage.label}`} />
+        </View>
+    </View>
+    const manageTask = (data) => {
+        setTaskToManage(data);
+        setModalOpen(true);
+    }
+
     // Generate Task component for every task applicable to current category & subcategory
     let taskJSX = tasks.map((data, index) => {
         if (data.category === selected ) {
             if (data.subcategory === "" || data.subcategory === selectedSub) {
-                return <Task data={data} key={index} update={updateTask}/>
+                return <Task data={data} key={index} update={updateTask} manageTask={manageTask}/>
             }
         }
     }, tasks);
 
     return (
+        <>
+        {modalOpen ? taskManageModal : ""}
         <ScrollView className="relative z-10 w-screen">
             {taskJSX}
         </ScrollView>
+        </>
     )
 }
 
 // Generic component for each task
-function Task({data, update}) {
+function Task({data, update, manageTask}) {
     const { colors } = useTheme();
     // State showing task completion status
     const [ complete, setComplete ] = useState(data.complete);
 
     return (
-        <View 
+        <Pressable 
+        onLongPress={() => {
+            // Open task management modal
+            // And pass task data to manage
+            manageTask(data);
+        }}
         className={`
         ${complete ? "bg-stone-800 opacity-70" : "bg-stone-700"}
         box-border p-4 mt-2 mx-4 rounded-md flex-row
@@ -54,6 +89,6 @@ function Task({data, update}) {
                     style={{color: colors.success}}/>
                     : ""}
             </Pressable>
-        </View>
+        </Pressable>
     )
 }

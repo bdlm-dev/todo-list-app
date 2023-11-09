@@ -116,6 +116,12 @@ const addTask = (taskData) => {
     tasksData.push(newTask);
 }
 
+// Delete task by taskID
+const removeTask = (taskId) => {
+    tasksData = tasksData.filter((data) => data.id != taskId);
+    return tasksData;
+}
+
 // Return array of [key, val] of the lists available
 // e.g. ['uni', 'University List'], ['shopping', 'Shopping List']
 // To be used in the dropdown picker as required by that package
@@ -133,5 +139,5 @@ const getListItems = (lists) => {
 
 export { 
     listsData, getListItems,
-    tasksData, addTask, getTasks
+    tasksData, addTask, removeTask, getTasks
 }

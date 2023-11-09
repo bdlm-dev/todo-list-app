@@ -9,6 +9,7 @@ const DefaultLightTheme = {
         border: 'rgb(216, 216, 216)',
         notification: 'rgb(255, 59, 48)',
         success: 'rgb(134, 204, 22)',
+        failure: 'rgb(240, 84, 79)',
     },
 };
 
@@ -23,6 +24,7 @@ const DefaultDarkTheme = {
         border: 'rgb(39, 39, 41)',
         notification: 'rgb(255, 69, 58)',
         success: 'rgb(134, 204, 22)',
+        failure: 'rgb(240, 84, 79)',
     },
 }
 
