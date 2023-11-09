@@ -52,8 +52,8 @@ export default function NewTaskModal({ navigation }) {
                     <View className="w-[30%]">
                         {/* Don't create if no text entered, or no list selected */}
                         <Button onPress={() => {
-                            if (text != "" && lvalue != null) {
-                                addTask({label: text, category: lvalue});
+                            if (text != "" && value != null) {
+                                addTask({label: text, category: value});
                                 setTimeout(() => {navigation.goBack()}, 500);
                             }
                         }} title="Create" />
