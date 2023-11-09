@@ -1,3 +1,5 @@
+import { storeLists, storeTasks, getLists, getTasks } from './savedata';
+
 // Sample list used when creating new list
 let defaultList =  {
     label: "Sample List",
@@ -8,9 +10,11 @@ let defaultList =  {
     ]
 };
 
+let listsData = [];
+
 // Dictionary of list by key: {label, subcategories}
 // Could be better implemented as just array with key as another named attribute like label, subcategories
-let listsData = {
+let listsDataSample = {
     "uni": {
         label: "University List",
         categories: [
@@ -38,10 +42,11 @@ const defaultTask = {
     complete: false,
 }
 
-// Storage of all tasks- I would rather this be on the back-end and part of a database
-// Rather than hardcoded into the js or saved via the js in frontend
+let tasksData = [];
+
+// Storage of sample tasks
 // Array of each task with details of: id, label, description, list(category), subcategory, complete
-let tasksData = [
+let tasksDataSample = [
     {
         id: 0,
         label: "TODO Uni Task 1",
@@ -103,7 +108,9 @@ let tasksData = [
 // Might not be necessary,
 // but doing this to be safe 
 // when fetching tasks data
-const getTasks = () => {return tasksData};
+const fetchTasks = () => {return tasksData};
+
+const fetchLists = () => {return listsData};
 
 // Add new task to tasksData
 // Create 'copy' of the template then fill in values
@@ -119,6 +126,9 @@ const addTask = (taskData) => {
 // Delete task by taskID
 const removeTask = (taskId) => {
     tasksData = tasksData.filter((data) => data.id != taskId);
+    for (let i = 0; i<tasksData.length;i++) {
+        tasksData[i].id = i;
+    }
     return tasksData;
 }
 
@@ -126,7 +136,7 @@ const removeTask = (taskId) => {
 // e.g. ['uni', 'University List'], ['shopping', 'Shopping List']
 // To be used in the dropdown picker as required by that package
 const getListItems = (lists) => {
-    if (lists === undefined) return [{}];
+    if (lists === undefined || lists === null) return [{}];
     let pairs = [];
     for (const [key, val] of Object.entries(lists)) {
         pairs.push({label : val.label, value: key});
@@ -134,10 +144,46 @@ const getListItems = (lists) => {
     return pairs;
 }
 
+const loadLists = async () => {
+    const fetchedData = await getLists();
+    if (fetchedData != null) {
+        if (fetchedData != listsData) {
+            listsData = fetchedData;
+        }
+    } else {
+        listsData = listsDataSample;
+        storeLists(listsData);
+    }
+    return;
+}
+
+const loadTasks = async () => {
+    let fetchedData = await getTasks();
+    if (Object.keys(fetchedData).length === 0) {
+        tasksData = tasksDataSample;
+    } else {
+        if (fetchedData != tasksData) {
+            tasksData = fetchedData;
+        }
+    }
+    return;
+}
+
+const loadAll = async () => {
+    try {
+        await loadLists();
+        await loadTasks();
+    } catch (error) {
+        console.log(error);
+    }
+    return;
+}
+
 // TODO: implement adding new subcategory for current list
 // TODO: implement adding new lists
 
 export { 
-    listsData, getListItems,
-    tasksData, addTask, removeTask, getTasks
+    listsData, getListItems, fetchLists,
+    tasksData, addTask, removeTask, fetchTasks,
+    loadAll
 }

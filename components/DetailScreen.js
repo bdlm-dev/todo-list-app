@@ -1,5 +1,6 @@
-import { View } from 'react-native';
+import { View, Button } from 'react-native';
 import { AppText } from './util';
+import { clearAll } from './data/savedata';
 
 // Screen to contain settings implementation
 function DetailScreen({ navigation }) {

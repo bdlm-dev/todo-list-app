@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import { getListItems } from '../data/data';
@@ -8,14 +8,16 @@ import { getListItems } from '../data/data';
 export default function ListSelector({lists, value, setValue}) {
     
     DropDownPicker.setTheme("DARK");
-
-    // Fetch [k, v] pairs of list key: label for use in dropdown
-    const listItems = getListItems(lists);
-
+    
     // Dropdown state initialisation
     // This dropdown package requires the props be stateful
     const [open, setOpen] = useState(false);
-    const [items, setItems] = useState(listItems);
+    // Fetch [k, v] pairs of list key: label for use in dropdown
+    const [items, setItems] = useState(getListItems(lists));
+
+    useEffect(() => {
+        setItems(getListItems(lists));
+    }, [lists]);
 
     return(
         <View className="relative pb-4 z-50 px-2">

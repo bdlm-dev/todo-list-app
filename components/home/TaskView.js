@@ -1,14 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import { View, ScrollView, Pressable, Button } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 import { AppText } from '../util';
 import { removeTask } from '../data/data';
+import { storeTasks } from '../data/savedata';
 
 // Display all tasks in scrollable view according to current active list
-export default function TaskView({tasks, setTasks, selected, selectedSub, updateTask}) {
+export default function TaskView({tasks, setTasks, selected, selectedSub, updateTask, hasLoadedTasks}) {
     const { colors } = useTheme();
+
+    const [, forceUpdate] = useReducer(x => x + 1, 0);
+
+    useEffect(() => {
+        forceUpdate();
+        storeTasks(tasks, hasLoadedTasks);
+    }, [tasks])
 
     // Modal for deleting tasks
     // Opened by long-press on tasks
@@ -29,19 +37,25 @@ export default function TaskView({tasks, setTasks, selected, selectedSub, update
             title={`DELETE TASK: ${taskToManage === null ? "" : taskToManage.label}`} />
         </View>
     </View>
+    
     const manageTask = (data) => {
         setTaskToManage(data);
         setModalOpen(true);
     }
 
     // Generate Task component for every task applicable to current category & subcategory
-    let taskJSX = tasks.map((data, index) => {
-        if (data.category === selected ) {
-            if (data.subcategory === "" || data.subcategory === selectedSub) {
-                return <Task data={data} key={index} update={updateTask} manageTask={manageTask}/>
-            }
+    let taskJSX = "";
+    if (tasks != null) {
+        if (Object.keys(tasks).length != 0) {
+            taskJSX = tasks.map((data, index) => {
+                if (data.category === selected ) {
+                    if (data.subcategory === "" || data.subcategory === selectedSub) {
+                        return <Task data={data} key={index} update={updateTask} manageTask={manageTask}/>
+                    }
+                }
+            }, tasks);
         }
-    }, tasks);
+    }
 
     return (
         <>

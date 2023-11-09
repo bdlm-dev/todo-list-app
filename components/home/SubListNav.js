@@ -15,7 +15,9 @@ export default function SubListNav({selectedTab, setSelectedTab, lists, selected
     // Fetch subcategories of active list
     let taskCategories = [];
     if (selectedList != null) {
-        taskCategories = lists[selectedList].categories;
+        if (lists[selectedList] != undefined) {
+            taskCategories = lists[selectedList].categories;
+        }
     }
     
     // Generate selectable component for each subcategory
