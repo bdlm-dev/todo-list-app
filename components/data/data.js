@@ -105,11 +105,8 @@ let tasksDataSample = [
     }
 ];
 
-// Might not be necessary,
-// but doing this to be safe 
-// when fetching tasks data
+// Fetch latest task and list data
 const fetchTasks = () => {return tasksData};
-
 const fetchLists = () => {return listsData};
 
 // Add new task to tasksData
@@ -144,6 +141,8 @@ const getListItems = (lists) => {
     return pairs;
 }
 
+// Attempt to load list data
+// If not found, use sample
 const loadLists = async () => {
     const fetchedData = await getLists();
     if (fetchedData != null) {
@@ -157,6 +156,8 @@ const loadLists = async () => {
     return;
 }
 
+// Attempt to load task data,
+// If not found, use sample
 const loadTasks = async () => {
     let fetchedData = await getTasks();
     if (Object.keys(fetchedData).length === 0) {
@@ -169,6 +170,7 @@ const loadTasks = async () => {
     return;
 }
 
+// Attempt to load list and task data
 const loadAll = async () => {
     try {
         await loadLists();

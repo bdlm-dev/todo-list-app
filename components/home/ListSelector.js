@@ -15,6 +15,7 @@ export default function ListSelector({lists, value, setValue}) {
     // Fetch [k, v] pairs of list key: label for use in dropdown
     const [items, setItems] = useState(getListItems(lists));
 
+    // Update local item state when lists prop updated
     useEffect(() => {
         setItems(getListItems(lists));
     }, [lists]);

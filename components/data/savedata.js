@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const LISTSKEY = "lists";
 const TASKSKEY = "tasks";
 
+// Attempt to store data for a given key to local storage
 const storeData = async (data, key) => {
     try {
         await AsyncStorage.setItem(key, JSON.stringify(data));
@@ -12,6 +13,7 @@ const storeData = async (data, key) => {
     }
 }
 
+// Attempt to fetch and parse data for a given key from local storage
 const fetchData = async (key) => {
     try {
         const rawData = await AsyncStorage.getItem(key);
@@ -32,6 +34,7 @@ const getLists = async () => {
     return fetchData(LISTSKEY);
 }
 
+// Store tasks, doesn't store empty array if tasks haven't been loaded from storage yet.
 const storeTasks = async (tasks, hasLoaded=true) => {
     if (!hasLoaded) {
         return;
@@ -48,6 +51,7 @@ const storeAll = async(lists, tasks) => {
     storeTasks(tasks);
 }
 
+// Clears local storage
 const clearAll = async () => {
     try {
         await AsyncStorage.clear();

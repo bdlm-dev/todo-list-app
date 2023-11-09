@@ -13,6 +13,7 @@ export default function TaskView({tasks, setTasks, selected, selectedSub, update
 
     const [, forceUpdate] = useReducer(x => x + 1, 0);
 
+    // Update self and save tasks data when tasks updates.
     useEffect(() => {
         forceUpdate();
         storeTasks(tasks, hasLoadedTasks);
@@ -38,6 +39,7 @@ export default function TaskView({tasks, setTasks, selected, selectedSub, update
         </View>
     </View>
     
+    // Open task management modal for given task
     const manageTask = (data) => {
         setTaskToManage(data);
         setModalOpen(true);

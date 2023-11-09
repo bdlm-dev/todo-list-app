@@ -11,10 +11,10 @@ function HomeScreen({ navigation }) {
     // Fetch active appearance theme
     const { colors } = useTheme();
 
+    // Whether tasks have been loaded from storage
     const [hasLoadedTask, setHasLoadedTask] = useState(false);
 
     useEffect(() => {
-        // clearAll();
         loadAll().then(() => {setHasLoadedTask(true)});
     }, [{}]);
 
@@ -80,12 +80,14 @@ function HomeScreen({ navigation }) {
         }
     }
 
-    if (Object.entries(tasks).length === 0) {
+    // If tasks is empty and hasn't loaded, fetch data 
+    if (Object.entries(tasks).length === 0 && !hasLoadedTask) {
         setTimeout(() => {
             setTasks(fetchTasks());
         }, 1000);
     }
 
+    // If list is empty, fetch data
     if (Object.entries(lists).length === 0) {
         setTimeout(() => {
             setLists(fetchLists());
@@ -108,7 +110,7 @@ function HomeScreen({ navigation }) {
                 selectedSub={selectedSubList} 
                 updateTask={updateTask} 
                 hasLoadedTasks={hasLoadedTask}/>
-                
+
             </View>
             <SubListNav 
             selectedTab={selectedTab} 
